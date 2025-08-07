@@ -1,7 +1,6 @@
 package com.railse.hiring.workforcemgmt.dto;
 
 import lombok.Data;
-
 import java.util.List;
 
 @Data

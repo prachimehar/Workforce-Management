@@ -1,5 +1,10 @@
 package com.railse.hiring.workforcemgmt.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 import com.railse.hiring.workforcemgmt.common.exception.ResourceNotFoundException;
 import com.railse.hiring.workforcemgmt.dto.*;
 import com.railse.hiring.workforcemgmt.mapper.ITaskManagementMapper;
@@ -9,17 +14,11 @@ import com.railse.hiring.workforcemgmt.model.enums.Task;
 import com.railse.hiring.workforcemgmt.model.enums.TaskStatus;
 import com.railse.hiring.workforcemgmt.repository.TaskRepository;
 import com.railse.hiring.workforcemgmt.service.TaskManagementService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
 
 
 @Service
 @Slf4j
 public class TaskManagementServiceImpl implements TaskManagementService {
-
 
     private final TaskRepository taskRepository;
     private final ITaskManagementMapper taskMapper;
@@ -27,7 +26,6 @@ public class TaskManagementServiceImpl implements TaskManagementService {
     private final Map<Long, List<TaskActivity>> activityStore = new HashMap<>();
     private final AtomicLong commentIdCounter = new AtomicLong(1000);
     private final AtomicLong activityIdCounter = new AtomicLong(2000);
-
 
     // Logging method
     private void logActivity(Long taskId, Long userId, String action) {
@@ -41,12 +39,10 @@ public class TaskManagementServiceImpl implements TaskManagementService {
         activityStore.computeIfAbsent(taskId, k -> new ArrayList<>()).add(activity);
     }
 
-
     public TaskManagementServiceImpl(TaskRepository taskRepository, ITaskManagementMapper taskMapper) {
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
     }
-
 
     @Override
     public TaskManagementDto findTaskById(Long id) {
@@ -58,7 +54,7 @@ public class TaskManagementServiceImpl implements TaskManagementService {
     @Override
     public List<TaskManagementDto> findTaskByAll() {
         List<TaskManagement> tasks = taskRepository.findAll();
-        return taskMapper.modelListToDtoList(tasks); // ✅ correct mapping
+        return taskMapper.modelListToDtoList(tasks);
     }
 
     @Override
@@ -107,7 +103,8 @@ public class TaskManagementServiceImpl implements TaskManagementService {
         return taskMapper.modelListToDtoList(updatedTasks);
     }
 
-
+    // Fixed BUG #1: Previously, it was assigning to only one assignee and cancelling the rest.
+    // Now, it correctly assigns tasks to all assignees in the list.
     @Override
     public String assignByReference(AssignByReferenceRequest request) {
         List<Task> applicableTasks = Task.getTasksByReferenceType(request.getReferenceType());
@@ -152,6 +149,8 @@ public class TaskManagementServiceImpl implements TaskManagementService {
 
         return "Tasks assigned successfully for reference " + request.getReferenceId();
     }
+
+    // Fixed BUG #2: Added logic to filter out tasks with status CANCELLED
 
     @Override
     public List<TaskManagementDto> fetchTasksByDate(TaskFetchByDateRequest request) {

@@ -1,12 +1,10 @@
 package com.railse.hiring.workforcemgmt.common.model.response;
 
-
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.railse.hiring.workforcemgmt.common.exception.StatusCode;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 @Data
 @NoArgsConstructor

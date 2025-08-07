@@ -5,7 +5,6 @@ import com.railse.hiring.workforcemgmt.dto.*;
 import com.railse.hiring.workforcemgmt.model.enums.Priority;
 import com.railse.hiring.workforcemgmt.service.TaskManagementService;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -18,7 +17,6 @@ public class TaskManagementController {
 
     private final AtomicLong commentIdCounter = new AtomicLong(1000);
     private final AtomicLong activityIdCounter = new AtomicLong(2000);
-
 
     public TaskManagementController(TaskManagementService taskManagementService) {
         this.taskManagementService = taskManagementService;
@@ -44,12 +42,10 @@ public class TaskManagementController {
         return new Response<>(taskManagementService.updateTasks(request));
     }
 
-
     @PostMapping("/assign-by-ref")
     public Response<String> assignByReference(@RequestBody AssignByReferenceRequest request) {
         return new Response<>(taskManagementService.assignByReference(request));
     }
-
 
     @PostMapping("/fetch-by-date/v2")
     public Response<List<TaskManagementDto>> fetchByDate(@RequestBody TaskFetchByDateRequest request) {

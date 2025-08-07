@@ -1,10 +1,7 @@
 package com.railse.hiring.workforcemgmt.model.enums;
 
-
 import com.railse.hiring.workforcemgmt.common.model.enums.ReferenceType;
 import lombok.Getter;
-
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,16 +14,13 @@ public enum Task {
     ARRANGE_PICKUP(List.of(ReferenceType.ORDER), "Arrange Pickup"),
     COLLECT_PAYMENT(List.of(ReferenceType.ORDER), "Collect Payment");
 
-
     private final List<ReferenceType> applicableReferenceTypes;
     private final String view;
-
 
     Task(List<ReferenceType> applicableReferenceTypes, String view) {
         this.applicableReferenceTypes = applicableReferenceTypes;
         this.view = view;
     }
-
 
     public static List<Task> getTasksByReferenceType(ReferenceType referenceType) {
         if (referenceType == null) {

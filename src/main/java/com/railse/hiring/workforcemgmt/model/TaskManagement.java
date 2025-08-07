@@ -1,12 +1,10 @@
 package com.railse.hiring.workforcemgmt.model;
 
-
 import com.railse.hiring.workforcemgmt.common.model.enums.ReferenceType;
 import com.railse.hiring.workforcemgmt.model.enums.Priority;
 import com.railse.hiring.workforcemgmt.model.enums.Task;
 import com.railse.hiring.workforcemgmt.model.enums.TaskStatus;
 import lombok.Data;
-
 
 @Data
 public class TaskManagement {

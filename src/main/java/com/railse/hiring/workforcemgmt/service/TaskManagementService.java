@@ -1,11 +1,8 @@
 package com.railse.hiring.workforcemgmt.service;
 
+import java.util.List;
 import com.railse.hiring.workforcemgmt.dto.*;
 import com.railse.hiring.workforcemgmt.model.enums.Priority;
-
-
-import java.util.List;
-
 
 public interface TaskManagementService {
 
